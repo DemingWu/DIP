@@ -40,18 +40,18 @@ end
 temp = round(W/2);
 % red area
 for i = 1:c
-for j = 1:temp
-    for k =1:temp
-        %红色区域左上角
-        result(j,k,i) = probability(img(j,k,i)+1,1,i);
-        %红色区域右上角
-        result(j,w-k+1,i) = probability(img(j,w-k+1,i)+1,num2,i);
-        %红色区域左下角
-        result(h-j+1,k,i) = probability(img(h-j+1,k,i)+1,num2*(num1-1)+1,i);
-        %红色区域右下角
-        result(h-j+1,w-k+1,i) = probability(img(h-j+1,w-k+1,i)+1,num2*num1,i);
+    for j = 1:temp
+        for k =1:temp
+            %红色区域左上角
+            result(j,k,i) = probability(img(j,k,i)+1,1,i);
+            %红色区域右上角
+            result(j,w-k+1,i) = probability(img(j,w-k+1,i)+1,num2,i);
+            %红色区域左下角
+            result(h-j+1,k,i) = probability(img(h-j+1,k,i)+1,num2*(num1-1)+1,i);
+            %红色区域右下角
+            result(h-j+1,w-k+1,i) = probability(img(h-j+1,w-k+1,i)+1,num2*num1,i);
+        end
     end
-end
 end
 %red end
 %green area
@@ -59,14 +59,14 @@ end
 for i = 1:c
     for j = 1:temp
         for k = 1:num2-1
-            for l = 0:temp 
+            for l = 0:temp
                 %找到该像素点在相邻区域的映射值并双线性插值
                 %上方
-               result(j,(k-1)*W+temp+l+1,i) = (W-l)/W*probability(img(j,(k-1)*W+temp+l+1,i)+1,k,i)+l/W*probability(img(j,(k-1)*W+temp+l+1,i)+1,k+1,i);
-               result(j,k*W+l,i) = (temp-l)/W*probability(img(j,k*W+l,i)+1,k,i)+(W-temp+l)/W*probability(img(j,k*W+l,i)+1,k+1,i);
-               %下方
-               result(h-j+1,(k-1)*W+temp+l+1,i) = (W-l)/W*probability(img(h-j+1,(k-1)*W+temp+l+1,i)+1,(num1-1)*num2+k,i)+l/W*probability(img(h-j+1,(k-1)*W+temp+l+1,i)+1,(num1-1)*num2+k+1,i);
-               result(h-j+1,k*W+l,i) = (temp-l)/W*probability(img(h-j+1,k*W+l,i)+1,(num1-1)*num2+k,i)+(W-temp+l)/W*probability(img(h-j+1,k*W+l,i)+1,(num1-1)*num2+k+1,i);
+                result(j,(k-1)*W+temp+l+1,i) = (W-l)/W*probability(img(j,(k-1)*W+temp+l+1,i)+1,k,i)+l/W*probability(img(j,(k-1)*W+temp+l+1,i)+1,k+1,i);
+                result(j,k*W+l,i) = (temp-l)/W*probability(img(j,k*W+l,i)+1,k,i)+(W-temp+l)/W*probability(img(j,k*W+l,i)+1,k+1,i);
+                %下方
+                result(h-j+1,(k-1)*W+temp+l+1,i) = (W-l)/W*probability(img(h-j+1,(k-1)*W+temp+l+1,i)+1,(num1-1)*num2+k,i)+l/W*probability(img(h-j+1,(k-1)*W+temp+l+1,i)+1,(num1-1)*num2+k+1,i);
+                result(h-j+1,k*W+l,i) = (temp-l)/W*probability(img(h-j+1,k*W+l,i)+1,(num1-1)*num2+k,i)+(W-temp+l)/W*probability(img(h-j+1,k*W+l,i)+1,(num1-1)*num2+k+1,i);
             end
         end
     end
@@ -75,11 +75,11 @@ end
 for i = 1:c
     for k = 1:temp
         for j = 1:num1-1
-            for l = 0:temp  
-               result((j-1)*W+temp+l+1,k,i) = (W-l)/W*probability(img((j-1)*W+temp+l+1,k,i)+1,num2*(j-1)+1,i)+l/W*probability(img((j-1)*W+temp+l+1,k,i)+1,num2*j+1,i);
-               result(j*W+l,k,i) = (temp-l)/W*probability(img(j*W+l,k,i)+1,num2*(j-1)+1,i)+(W-temp+l)/W*probability(img(j*W+l,k,i)+1,num2*j+1,i);
-               result((j-1)*W+temp+l+1,w-k+1,i) = (W-l)/W*probability(img((j-1)*W+temp+l+1,w-k+1,i)+1,num2*j,i)+l/W*probability(img((j-1)*W+temp+l+1,w-k+1,i)+1,num2*(j+1),i);
-               result(j*W+l,w-k+1,i) = (temp-l)/W*probability(img(j*W+l,w-k+1,i)+1,num2*j,i)+(W-temp+l)/W*probability(img(j*W+l,w-k+1,i)+1,num2*(j+1),i);
+            for l = 0:temp
+                result((j-1)*W+temp+l+1,k,i) = (W-l)/W*probability(img((j-1)*W+temp+l+1,k,i)+1,num2*(j-1)+1,i)+l/W*probability(img((j-1)*W+temp+l+1,k,i)+1,num2*j+1,i);
+                result(j*W+l,k,i) = (temp-l)/W*probability(img(j*W+l,k,i)+1,num2*(j-1)+1,i)+(W-temp+l)/W*probability(img(j*W+l,k,i)+1,num2*j+1,i);
+                result((j-1)*W+temp+l+1,w-k+1,i) = (W-l)/W*probability(img((j-1)*W+temp+l+1,w-k+1,i)+1,num2*j,i)+l/W*probability(img((j-1)*W+temp+l+1,w-k+1,i)+1,num2*(j+1),i);
+                result(j*W+l,w-k+1,i) = (temp-l)/W*probability(img(j*W+l,w-k+1,i)+1,num2*j,i)+(W-temp+l)/W*probability(img(j*W+l,w-k+1,i)+1,num2*(j+1),i);
             end
         end
     end
@@ -100,7 +100,7 @@ for i = 1:c
                     t = img(temp+(j-1)*W+jj+1,temp+(k-1)*W+kk+1,i)+1;
                     result(temp+(j-1)*W+jj+1,temp+(k-1)*W+kk+1,i) = (1-kk/W)*((1-jj/W)*UL(t)+jj/W*BL(t))+kk/W*(UR(t)*(1-jj/W)+jj/W*BR(t));
                 end
-               
+                
             end
         end
     end
@@ -132,16 +132,36 @@ for ii = (1:Height)
     end
 end
 %将大于阈值的数平分到各直方图上
+recall = 0;
 for i = 1:256
     if count(i)>T
         sum = sum+count(i)-T;
         count(i) = T;
     end
 end
-sum = round(sum/256);
+recall = sum-256*fix(sum/256);
+sum = fix(sum/256);
 for i = 1:256
     count(i) = count(i)+sum;
 end
+
+while sum~=0
+    sum = recall;
+    for i = 1:256
+        if count(i)>T
+            sum = sum+count(i)-T;
+            count(i) = T;
+        end
+    end
+    recall = sum-256*fix(sum/256)
+    sum = fix(sum/256);
+    for i = 1:256
+        count(i) = count(i)+sum;
+    end
+end
+
+
+
 probability = count/(W*W);
 sum = 0;
 %找到映射关系
