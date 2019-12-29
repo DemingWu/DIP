@@ -3,21 +3,21 @@ close all;clc;clear;
 origin = imread('fog1.jpg');
 subplot(231);imshow(origin);title('fog1');
 [h,w,c] = size(origin);
-[min_img,dark_img] = getDarkChannel(origin,7);%µÃµ½ÈıÍ¨µÀ×îĞ¡ÖµÍ¼ºÍ°µÍ¨µÀÍ¼£¬
+[min_img,dark_img] = getDarkChannel(origin,7);%å¾—åˆ°ä¸‰é€šé“æœ€å°å€¼å›¾å’Œæš—é€šé“å›¾ï¼Œ
 % imshow(dark_img);
 
 subplot(232);imshow(dark_img);title('darkFog1');
-[AtmosLight,transmittance] = getParameters(origin,dark_img,0.001,0.95,0.1);%µÃµ½´óÆø¹âÖµºÍÍ¸ÉäÂÊ
+[AtmosLight,transmittance] = getParameters(origin,dark_img,0.001,0.95,0.1);%å¾—åˆ°å¤§æ°”å…‰å€¼å’Œé€å°„ç‡
 subplot(233);imshow(transmittance);title('tranFog1');
 for i = 1:c
- origin(:,:,i) = uint8((double(origin(:,:,i))-AtmosLight)./transmittance(:,:)+AtmosLight);%Ô­Í¼Ïñ¸ù¾İ¹«Ê½ÍÆµ¼
+ origin(:,:,i) = uint8((double(origin(:,:,i))-AtmosLight)./transmittance(:,:)+AtmosLight);%åŸå›¾åƒæ ¹æ®å…¬å¼æ¨å¯¼
 end
 subplot(234);imshow(origin);title('moveFog1');
 %% picture 1 guild filt
 origin = imread('fog1.jpg');
-r = 8; % ´°¿Ú´óĞ¡
-eps = 0.2^2; % ÕıÔò»¯²ÎÊı
-transmittance = guidedfilter(double(min_img)/255,transmittance,r,eps);%ÈıÍ¨µÀ×îĞ¡ÖµÍ¼Æ¬×÷ÎªguidedÍ¼£¬Í¸ÉäÂÊÍ¼×÷ÎªfilterÍ¼
+r = 8; % çª—å£å¤§å°
+eps = 0.2^2; % æ­£åˆ™åŒ–å‚æ•°
+transmittance = guidedfilter(double(min_img)/255,transmittance,r,eps);%ä¸‰é€šé“æœ€å°å€¼å›¾ç‰‡ä½œä¸ºguidedå›¾ï¼Œé€å°„ç‡å›¾ä½œä¸ºfilterå›¾
 subplot(236);imshow(transmittance);title('tranGuideFog1');
 for i = 1:c
  origin(:,:,i) = uint8((double(origin(:,:,i))-AtmosLight)./transmittance(:,:)+AtmosLight);
@@ -42,8 +42,9 @@ subplot(245);imshow(origin);title('moveFog2');
 origin = imread('fog2.jpg');
 r = 8; 
 eps = 0.2^2;
+transmittance_sky = transmittance;
 transmittance = guidedfilter(double(min_img)/255,transmittance,r,eps);
-transmittance_sky = avoidSky(dark_img,AtmosLight,transmittance);
+transmittance_sky = avoidSky(dark_img,AtmosLight,transmittance_sky);
 transmittance_sky = guidedfilter(double(min_img)/255,transmittance_sky,r,eps);
 subplot(244);imshow(transmittance);title('tranGuideFog2');
 %transmittance = imguidedfilter(transmittance,origin);%test
